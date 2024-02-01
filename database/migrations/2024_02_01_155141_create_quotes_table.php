@@ -17,17 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('question');
             $table->enum('mode', ['binary', 'multiple_choice']);
-            $table->string('answer1')->nullable()->default(null);
-            $table->string('answer2')->nullable()->default(null);
-            $table->string('answer3')->nullable()->default(null);
+            $table->string('answer_a')->nullable()->default(null);
+            $table->string('answer_b')->nullable()->default(null);
+            $table->string('answer_c')->nullable()->default(null);
+            $table->enum('right_answer', ['0', '1', 'A', 'B', 'C',]);
             $table->timestamps();
-        });
-        
-        Schema::table('users', function (Blueprint $table) {
-            $table->renameColumn('answer1', 'answer_a');
-            $table->renameColumn('answer2', 'answer_b');
-            $table->renameColumn('answer3', 'answer_c');
-            $table->string('right_answer', 10);
         });
     }
 
