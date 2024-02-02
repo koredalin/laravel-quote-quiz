@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Въпросници</title>
-</head>
-<body>
-    <h1>Въпросници</h1>
-    <ul>
+@extends('layouts.quiz')
+
+@section('title', $title)
+
+@section('content')
+    <ul class="list-disc pl-5">
         @foreach ($questionnaires as $questionnaire)
-            <li>{{ $questionnaire->title }}</li> <!-- Показва заглавието на въпросника -->
+            <li class="mb-2">{{ $questionnaire->title }}</li>
         @endforeach
     </ul>
 
-    {{ $questionnaires->links() }} <!-- Показва линковете за пагинация -->
-</body>
-</html>
+    {{ $questionnaires->links() }}
+@endsection
