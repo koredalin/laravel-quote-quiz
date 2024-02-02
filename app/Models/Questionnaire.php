@@ -11,6 +11,6 @@ class Questionnaire extends Model
 
     // The relation to Quote model, table.
     public function quotes() {
-        return $this->belongsToMany(Quote::class);
+        return $this->belongsToMany(Quote::class, 'questionnaires_quotes', 'questionnaire_id', 'quote_id');
     }
 }

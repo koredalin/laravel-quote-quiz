@@ -8,7 +8,11 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/css/quiz.css', 'resources/js/app.js'])
+    @vite([
+        'resources/css/app.css',
+        'resources/css/quiz.css',
+        'resources/js/app.js',
+        'resources/js/questionnaires.js'])
 </head>
 <body>
     <h1 class="text-2xl font-bold mb-4 text-center">@yield('title')</h1>

@@ -2,3 +2,34 @@
     width: 80%;
     margin: 0 auto;
 }
+
+.green {
+    color: green;
+}
+
+.red {
+    color: darkred;
+}
+
+.quote {
+    text-align: justify;
+    max-width: 400px;
+    margin-bottom: 20px;
+}
+
+.radio-question {
+    font-size: 1.2em;
+}
+
+.radio-answer {
+    display: inline-flex;
+    float: left;
+}
+
+.radio-answer label {
+  text-align: left;
+}
+
+.clear {
+    clear: both;
+}

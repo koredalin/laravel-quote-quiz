@@ -14,4 +14,12 @@ class QuestionnaireController extends Controller
 
         return view('questionnaires.index', compact('questionnaires', 'title'));
     }
+    
+    public function getQuotes($id)
+    {
+        $questionnaire = Questionnaire::findOrFail($id);
+        $questions = $questionnaire->quotes; // Предполагаме, че имате релация 'questions' в модела Questionnaire
+
+        return response()->json($questions);
+    }
 }
