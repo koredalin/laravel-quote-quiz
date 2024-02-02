@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Quote extends Model
 {
     use HasFactory;
+
+    // The relation to Questionnaire model, table.
+    public function questionnaires() {
+        return $this->belongsToMany(Questionnaire::class);
+    }
 }

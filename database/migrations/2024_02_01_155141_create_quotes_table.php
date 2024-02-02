@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('quotes', function (Blueprint $table) {
             $table->id();
             $table->string('question');
-            $table->enum('mode', ['binary', 'multiple_choice']);
+            $table->enum('mode', ['binary', 'multiple_choice',]);
             $table->string('answer_a')->nullable()->default(null);
             $table->string('answer_b')->nullable()->default(null);
             $table->string('answer_c')->nullable()->default(null);

@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('guest_users', function (Blueprint $table) {
+        Schema::create('questionnaires', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->string('surname', 100);
-            $table->string('email', 255);
-            $table->tinyInteger('total_score');
-            $table->integer('duration');
+            $table->string('title');
+            $table->string('mode', 34);
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('guest_users');
+        Schema::dropIfExists('questionnaires');
     }
 };

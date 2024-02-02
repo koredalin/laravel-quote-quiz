@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('guest_users', function (Blueprint $table) {
+        Schema::create('questionnaires_quotes', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->string('surname', 100);
-            $table->string('email', 255);
-            $table->tinyInteger('total_score');
-            $table->integer('duration');
+            $table->foreignId('questionnaire_id')->constrained()->onDelete('cascade');
+            $table->foreignId('quote_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('guest_users');
+        Schema::dropIfExists('questionnaires_quotes');
     }
 };
