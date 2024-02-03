@@ -25,7 +25,7 @@
 
       <form id="quizForm" class="mt-2">
         <input type="text" placeholder="Name" name="name" class="mb-4">
-        <input type="text" placeholder="Last name" name="last_name" class="mb-4">
+        <input type="text" placeholder="Last name" name="surname" class="mb-4">
         <input type="email" placeholder="Email" name="email" class="mb-4">
         <a type="button" href="javascript:void(0)" onclick="startTimer()" id="timer_start_button" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Timer Start</a>
         <div id="timer">{{ date('H:i:s', $durationInSeconds) }}</div>

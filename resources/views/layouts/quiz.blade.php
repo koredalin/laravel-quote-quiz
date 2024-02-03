@@ -12,7 +12,8 @@
         'resources/css/app.css',
         'resources/css/quiz.css',
         'resources/js/app.js',
-        'resources/js/questionnaires.js'])
+        'resources/js/questionnaires/questionnaires.js',
+        'resources/js/questionnaires/personal_data_local.js'])
 </head>
 <body>
     <h1 class="text-2xl font-bold mb-4 text-center">@yield('title')</h1>

@@ -1,4 +1,7 @@
 let loadedQuestionnnaireId = 0;
+let rightAnswers = {};
+let timerInterval = null;
+let sessionTimeElapsed = 0;
 
 let loadQuestions = function (questionnaireId) {
   fetch(`/api/questionnaires/${questionnaireId}/quotes`)
@@ -11,8 +14,6 @@ let loadQuestions = function (questionnaireId) {
     .catch(error => console.error('Error:', error));
 };
 
-let rightAnswers = {};
-
 let updateModal = function (data) {
   rightAnswers = {};
   if (!data.length) {
@@ -21,6 +22,7 @@ let updateModal = function (data) {
 
   let quotesContainer = document.getElementById('questions_container');
   quotesContainer.innerHTML = '';
+  quotesContainer.classList.add('hidden');
   data.forEach(function (quoteObj) {
     let quoteDiv = document.createElement('DIV');
     quoteDiv.className = 'quote';
@@ -107,23 +109,15 @@ let startTimer = function () {
   questionsContainer.classList.remove('hidden');
   submitButton.classList.remove('hidden');
 
-  const timerElement = document.getElementById('timer');
 //    let time = durationInSeconds;
-  let time = 8;
-
-  function updateTimerDisplay() {
-    const hours = Math.floor(time / (60 * 60));
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    timerElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  }
+  sessionTimeElapsed = 8;
 
   updateTimerDisplay();
 
-  const timerInterval = setInterval(() => {
-    time--;
+  timerInterval = setInterval(() => {
+    sessionTimeElapsed--;
     updateTimerDisplay();
-    if (time === 0) {
+    if (sessionTimeElapsed === 0) {
       clearInterval(timerInterval);
       questionsContainer.classList.add('hidden');
       submitButton.classList.add('hidden');
@@ -157,6 +151,20 @@ let getAnsweredQuestionsCount = function () {
   return count;
 };
 
+let updateTimerDisplay =  function () {
+  const timerElement = document.getElementById('timer');
+  const hours = Math.floor(sessionTimeElapsed / (60 * 60));
+  const minutes = Math.floor(sessionTimeElapsed / 60);
+  const seconds = sessionTimeElapsed % 60;
+  timerElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+};
+
+let stopTimer = function () {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+};
+
 /********************* RESET **************************/
 
 let reset = function () {
@@ -167,6 +175,9 @@ let reset = function () {
   resetButton.classList.add('hidden');
   loadQuestions(loadedQuestionnnaireId);
   timerStartButton.classList.remove('hidden');
+  stopTimer();
+  sessionTimeElapsed = durationInSeconds;
+  updateTimerDisplay();
 };
 
 window.reset = reset;
@@ -175,6 +186,16 @@ window.reset = reset;
 
 let submit = function () {
   showQuestionnaireResult();
+  saveToLocalStorage(
+      document.querySelector('input[name="name"]').value,
+      document.querySelector('input[name="surname"]').value,
+      document.querySelector('input[name="email"]').value
+  );
+  stopTimer();
+  sessionTimeElapsed = durationInSeconds;
+  updateTimerDisplay();
+  document.getElementById('reset_button').classList.remove('hidden');
+  document.getElementById('submit').classList.add('hidden');
 };
 
 window.submit = submit;
