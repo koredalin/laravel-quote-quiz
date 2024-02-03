@@ -20,6 +20,7 @@ let updateModal = function (data) {
   }
 
   let quotesContainer = document.getElementById('questions_container');
+  quotesContainer.innerHTML = '';
   data.forEach(function (quoteObj) {
     let quoteDiv = document.createElement('DIV');
     quoteDiv.className = 'quote';
@@ -95,7 +96,7 @@ window.closeModal = closeModal;
 /*************** Timer Start *****************/
 
 let startTimer = function () {
-  const timerStartButton = document.querySelector('#timer_start_button');
+  const timerStartButton = document.getElementById('timer_start_button');
   timerStartButton.classList.add('hidden');
 
   const questionsContainer = document.querySelector('#questions_container');
@@ -108,7 +109,7 @@ let startTimer = function () {
 
   const timerElement = document.getElementById('timer');
 //    let time = durationInSeconds;
-  let time = 35;
+  let time = 8;
 
   function updateTimerDisplay() {
     const hours = Math.floor(time / (60 * 60));
@@ -124,7 +125,6 @@ let startTimer = function () {
     updateTimerDisplay();
     if (time === 0) {
       clearInterval(timerInterval);
-      timerStartButton.classList.remove('hidden');
       questionsContainer.classList.add('hidden');
       submitButton.classList.add('hidden');
       unansweredQuestionsValSpan.innerHTML = Object.keys(rightAnswers).length - getAnsweredQuestionsCount();
@@ -132,8 +132,8 @@ let startTimer = function () {
       Object.values(allAnswersRadio).forEach(radio => {
         radio.checked = false;
       });
-console.log(rightAnswers);
-//      closeModal();
+      
+      document.getElementById('reset_button').classList.remove('hidden');
     }
   }, 1000);
 
@@ -157,11 +157,24 @@ let getAnsweredQuestionsCount = function () {
   return count;
 };
 
+/********************* RESET **************************/
+
+let reset = function () {
+  const unansweredQuestionsDiv = document.getElementById('unanswer_questions_number');
+  const resetButton = document.getElementById('reset_button');
+  const timerStartButton = document.getElementById('timer_start_button');
+  unansweredQuestionsDiv.classList.add('hidden');
+  resetButton.classList.add('hidden');
+  loadQuestions(loadedQuestionnnaireId);
+  timerStartButton.classList.remove('hidden');
+};
+
+window.reset = reset;
+
 /********************* SUBMIT **************************/
 
 let submit = function () {
   showQuestionnaireResult();
-  console.log('submit');
 };
 
 window.submit = submit;
