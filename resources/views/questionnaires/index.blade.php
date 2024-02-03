@@ -34,6 +34,7 @@
                 <button type="submit" class="hidden mt-4 px-4 py-2 bg-blue-500 text-white rounded">Submit</button>
             </form>
 
+            <div id="unanswer_questions_number" class="hidden darkred">The number of unanswered questions is <span id="unanswer_questions_number_val"></span>.</div>
             <a type="button" href="javascript:void(0)" onclick="reset()" id="reset_button" class="hidden mt-4 px-4 py-2 bg-blue-500 text-white rounded">Reset</a>
             
             <button href="javascript:void(0)" onclick="closeModal()" class="mt-3 text-indigo-600 hover:text-indigo-900">Close</button>

@@ -11,11 +11,11 @@ let loadQuestions = function (questionnaireId) {
 let rightAnswers = {};
 
 let updateModal = function (data) {
+  rightAnswers = {};
   if (!data.length) {
     return;
   }
 
-  rightAnswers = {};
   let quotesContainer = document.getElementById('questions_container');
   data.forEach(function (quoteObj) {
     let quoteDiv = document.createElement('DIV');
@@ -42,13 +42,13 @@ let updateModal = function (data) {
       answer = answer === '1' ? 'Yes' : 'No';
     } else {
       // Multiple choice ("A", "B", "C") answers.
-      answersDivHtml += '<div class="radio-answer"><input type="radio" name="' + radioName + '" id="' + radioName + '_a" value="a">&nbsp;&nbsp;';
+      answersDivHtml += '<div class="radio-answer"><input type="radio" name="' + radioName + '" id="' + radioName + '_a" value="A">&nbsp;&nbsp;';
       answersDivHtml += '<label for="' + radioName + '_a"><strong>' + quoteObj.answer_a + '</strong></label></div>';
       answersDivHtml += '<br>';
-      answersDivHtml += '<div class="radio-answer"><input type="radio" name="' + radioName + '" id="' + radioName + '_b" value="b">&nbsp;&nbsp;';
+      answersDivHtml += '<div class="radio-answer"><input type="radio" name="' + radioName + '" id="' + radioName + '_b" value="B">&nbsp;&nbsp;';
       answersDivHtml += '<label for="' + radioName + '_b"><strong>' + quoteObj.answer_b + '</strong></label></div>';
       answersDivHtml += '<br>';
-      answersDivHtml += '<div class="radio-answer"><input type="radio" name="' + radioName + '" id="' + radioName + '_c" value="c">&nbsp;&nbsp;';
+      answersDivHtml += '<div class="radio-answer"><input type="radio" name="' + radioName + '" id="' + radioName + '_c" value="C">&nbsp;&nbsp;';
       answersDivHtml += '<label for="' + radioName + '_c"><strong>' + quoteObj.answer_c + '</strong></label></div>';
     }
 
@@ -64,7 +64,7 @@ let updateModal = function (data) {
     // Wrong answer, hidden.
     let wrongAnswerDiv = document.createElement('DIV');
     rightAnswerDiv.classList.add('hidden');
-    rightAnswerDiv.classList.add('red');
+    rightAnswerDiv.classList.add('darkred');
     wrongAnswerDiv.innerHTML = 'Sorry, you are wrong! The right answer is "<strong>' + answer + '</strong>".';
     quoteDiv.appendChild(rightAnswerDiv);
     quoteDiv.appendChild(wrongAnswerDiv);
@@ -95,13 +95,16 @@ let startTimer = function () {
 
   const questionsContainer = document.querySelector('#questions_container');
   const submitButton = document.querySelector('form button[type="submit"]');
+  const unansweredQuestionsDiv = document.getElementById('unanswer_questions_number');
+  const unansweredQuestionsValSpan = document.getElementById('unanswer_questions_number_val');
+  const allAnswersRadio = document.querySelectorAll('input[name^=quote_answer]');
   questionsContainer.classList.remove('hidden');
   submitButton.classList.remove('hidden');
 
   const timerElement = document.getElementById('timer');
 //    let time = durationInSeconds;
 //    console.log(durationInSeconds);
-  let time = 10;
+  let time = 5;
 
   function updateTimerDisplay() {
     const hours = Math.floor(time / (60 * 60));
@@ -120,11 +123,33 @@ let startTimer = function () {
       timerStartButton.classList.remove('hidden');
       questionsContainer.classList.add('hidden');
       submitButton.classList.add('hidden');
+      unansweredQuestionsValSpan.innerHTML = Object.keys(rightAnswers).length - getAnsweredQuestionsCount();
+      unansweredQuestionsDiv.classList.remove('hidden');
+      Object.values(allAnswersRadio).forEach(radio => {
+        radio.checked = false;
+      });
 console.log(rightAnswers);
-      closeModal();
+//      closeModal();
     }
   }, 1000);
 
 };
 
 window.startTimer = startTimer;
+
+let getAnsweredQuestionsCount = function () {
+  if (Object.keys(rightAnswers).length === 0) {
+    return 0;
+  }
+  
+  let count = 0;
+  Object.keys(rightAnswers).forEach(radioName => {
+    console.log(radioName);
+    const answerRadio = document.querySelector('input[name='+radioName+']:checked');
+    if (answerRadio) {
+      count++;
+    }
+  });
+  
+  return count;
+};
