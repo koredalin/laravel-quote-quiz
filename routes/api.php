@@ -20,3 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/questionnaires/{id}/quotes', [QuestionnaireController::class, 'getQuotes']);
+
+Route::post('/questionnaire/{id}/submit', [QuestionnaireController::class, 'submitQuiz']);

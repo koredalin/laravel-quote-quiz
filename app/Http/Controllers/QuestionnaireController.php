@@ -27,4 +27,18 @@ class QuestionnaireController extends Controller
 
         return response()->json($questions);
     }
+
+    public function submitQuiz($id, Request $request)
+    {
+        // Input POST request data.
+        $data = $request->all();
+
+        // TODO - Validation and DB insert into guest_user table.
+        
+        return response()->json([
+            'message' => 'Quiz submitted successfully',
+            'id' => $id,
+            'data' => json_encode($data),
+        ]);
+    }
 }

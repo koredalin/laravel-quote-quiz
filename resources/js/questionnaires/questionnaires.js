@@ -1,7 +1,7 @@
 let loadedQuestionnnaireId = 0;
 let rightAnswers = {};
 let timerInterval = null;
-let sessionTimeElapsed = 0;
+let sessionRemainingTime = 0;
 
 let loadQuestions = function (questionnaireId) {
   fetch(`/api/questionnaires/${questionnaireId}/quotes`)
@@ -109,15 +109,15 @@ let startTimer = function () {
   questionsContainer.classList.remove('hidden');
   submitButton.classList.remove('hidden');
 
-//    let time = durationInSeconds;
-  sessionTimeElapsed = 8;
+//    let sessionRemainingTime = durationInSeconds;
+  sessionRemainingTime = 20;
 
   updateTimerDisplay();
 
   timerInterval = setInterval(() => {
-    sessionTimeElapsed--;
+    sessionRemainingTime--;
     updateTimerDisplay();
-    if (sessionTimeElapsed === 0) {
+    if (sessionRemainingTime === 0) {
       clearInterval(timerInterval);
       questionsContainer.classList.add('hidden');
       submitButton.classList.add('hidden');
@@ -153,9 +153,9 @@ let getAnsweredQuestionsCount = function () {
 
 let updateTimerDisplay =  function () {
   const timerElement = document.getElementById('timer');
-  const hours = Math.floor(sessionTimeElapsed / (60 * 60));
-  const minutes = Math.floor(sessionTimeElapsed / 60);
-  const seconds = sessionTimeElapsed % 60;
+  const hours = Math.floor(sessionRemainingTime / (60 * 60));
+  const minutes = Math.floor(sessionRemainingTime / 60);
+  const seconds = sessionRemainingTime % 60;
   timerElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 };
 
@@ -176,7 +176,7 @@ let reset = function () {
   loadQuestions(loadedQuestionnnaireId);
   timerStartButton.classList.remove('hidden');
   stopTimer();
-  sessionTimeElapsed = durationInSeconds;
+  sessionRemainingTime = durationInSeconds;
   updateTimerDisplay();
 };
 
@@ -186,13 +186,14 @@ window.reset = reset;
 
 let submit = function () {
   showQuestionnaireResult();
+  submitForm();
   saveToLocalStorage(
       document.querySelector('input[name="name"]').value,
       document.querySelector('input[name="surname"]').value,
       document.querySelector('input[name="email"]').value
   );
   stopTimer();
-  sessionTimeElapsed = durationInSeconds;
+  sessionRemainingTime = durationInSeconds;
   updateTimerDisplay();
   document.getElementById('reset_button').classList.remove('hidden');
   document.getElementById('submit').classList.add('hidden');
@@ -209,4 +210,31 @@ let showQuestionnaireResult = function () {
       : document.getElementById(radioName+'_fail');
     resultDiv.classList.remove('hidden');
   });
+};
+
+let submitForm = function () {
+  let submitDate = new Date();
+  let submitTimeUtc = submitDate.toUTCString();
+  let formData = {
+    name: document.querySelector('input[name="name"]').value,
+    surname: document.querySelector('input[name="surname"]').value,
+    email: document.querySelector('input[name="email"]').value,
+    answered_questions_count: getAnsweredQuestionsCount(),
+    unanswered_questions_count: Object.keys(rightAnswers).length - getAnsweredQuestionsCount(),
+    time_elapsed: durationInSeconds - sessionRemainingTime,
+    submit_time: submitTimeUtc
+  };
+  Object.keys(rightAnswers).forEach(radioName => {
+    const answerRadio = document.querySelector('input[name='+radioName+']:checked');
+    formData[radioName] = answerRadio ? answerRadio.value : '';
+  });
+
+  axios.post('/api/questionnaire/'+loadedQuestionnnaireId+'/submit', formData)
+    .then((response) => {
+      console.log(response.data);
+      // TODO - Show if the result is successfully submited.
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 };
