@@ -11,14 +11,19 @@ class QuestionnaireController extends Controller
     {
         $questionnaires = Questionnaire::paginate(10);
         $title = 'Questionnaires List';
+        $durationInSeconds = 5 * 60;
 
-        return view('questionnaires.index', compact('questionnaires', 'title'));
+        return view('questionnaires.index', compact(
+            'questionnaires',
+            'title',
+            'durationInSeconds')
+        );
     }
     
     public function getQuotes($id)
     {
         $questionnaire = Questionnaire::findOrFail($id);
-        $questions = $questionnaire->quotes; // Предполагаме, че имате релация 'questions' в модела Questionnaire
+        $questions = $questionnaire->quotes;
 
         return response()->json($questions);
     }
