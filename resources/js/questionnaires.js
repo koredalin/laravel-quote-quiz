@@ -1,9 +1,12 @@
+let loadedQuestionnnaireId = 0;
+
 let loadQuestions = function (questionnaireId) {
   fetch(`/api/questionnaires/${questionnaireId}/quotes`)
     .then(response => response.json())
     .then(data => {
       console.log(data);
       updateModal(data);
+      loadedQuestionnnaireId = questionnaireId;
     })
     .catch(error => console.error('Error:', error));
 };
@@ -58,13 +61,15 @@ let updateModal = function (data) {
     quoteDiv.appendChild(answersDiv);
     // Right answer, hidden.
     let rightAnswerDiv = document.createElement('DIV');
+    rightAnswerDiv.id = radioName+'_success';
     rightAnswerDiv.classList.add('hidden');
     rightAnswerDiv.classList.add('green');
     rightAnswerDiv.innerHTML = 'Correct! The right answer is "<strong>' + answer + '</strong>".';
     // Wrong answer, hidden.
     let wrongAnswerDiv = document.createElement('DIV');
-    rightAnswerDiv.classList.add('hidden');
-    rightAnswerDiv.classList.add('darkred');
+    wrongAnswerDiv.id = radioName+'_fail';
+    wrongAnswerDiv.classList.add('hidden');
+    wrongAnswerDiv.classList.add('darkred');
     wrongAnswerDiv.innerHTML = 'Sorry, you are wrong! The right answer is "<strong>' + answer + '</strong>".';
     quoteDiv.appendChild(rightAnswerDiv);
     quoteDiv.appendChild(wrongAnswerDiv);
@@ -94,7 +99,7 @@ let startTimer = function () {
   timerStartButton.classList.add('hidden');
 
   const questionsContainer = document.querySelector('#questions_container');
-  const submitButton = document.querySelector('form button[type="submit"]');
+  const submitButton = document.getElementById('submit');
   const unansweredQuestionsDiv = document.getElementById('unanswer_questions_number');
   const unansweredQuestionsValSpan = document.getElementById('unanswer_questions_number_val');
   const allAnswersRadio = document.querySelectorAll('input[name^=quote_answer]');
@@ -103,8 +108,7 @@ let startTimer = function () {
 
   const timerElement = document.getElementById('timer');
 //    let time = durationInSeconds;
-//    console.log(durationInSeconds);
-  let time = 5;
+  let time = 35;
 
   function updateTimerDisplay() {
     const hours = Math.floor(time / (60 * 60));
@@ -144,7 +148,6 @@ let getAnsweredQuestionsCount = function () {
   
   let count = 0;
   Object.keys(rightAnswers).forEach(radioName => {
-    console.log(radioName);
     const answerRadio = document.querySelector('input[name='+radioName+']:checked');
     if (answerRadio) {
       count++;
@@ -152,4 +155,24 @@ let getAnsweredQuestionsCount = function () {
   });
   
   return count;
+};
+
+/********************* SUBMIT **************************/
+
+let submit = function () {
+  showQuestionnaireResult();
+  console.log('submit');
+};
+
+window.submit = submit;
+
+let showQuestionnaireResult = function () {
+  Object.entries(rightAnswers).forEach(entry => {
+    const [radioName, rightAnswer] = entry;
+    const answerRadio = document.querySelector('input[name='+radioName+']:checked');
+    let resultDiv = answerRadio && rightAnswer === answerRadio.value
+      ? document.getElementById(radioName+'_success')
+      : document.getElementById(radioName+'_fail');
+    resultDiv.classList.remove('hidden');
+  });
 };
