@@ -39,14 +39,18 @@
                 <tr>
                     <td>{{ $result->name }}</td>
                     <td>{{ $result->email }}</td>
-                    <td>{{ $result->total_score }}</td>
+                    <td class="text-right">{{ $result->total_score }}</td>
                     <td>{{ gmdate("H:i:s", $result->duration) }}</td>
-                    <td>{{ $result->unanswered_questions }}</td>
+                    <td class="text-right">{{ $result->unanswered_questions }}</td>
                     <td>{{ $result->submit_time_utc }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
     {{ $results->links() }}
+</div>
+
+<div id="internal_links">
+  <p><a href="/questionnaires">Questionnaires</a></p>
 </div>
 @endsection

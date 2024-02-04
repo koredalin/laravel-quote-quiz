@@ -3,7 +3,6 @@
 @section('title', $title)
 
 @section('content')
-
 <h1 class="text-2xl font-bold mb-4 text-center">@yield('title')</h1>
 <br>
 
@@ -48,4 +47,7 @@
   </div>
 </div>
 
+<div id="internal_links">
+  <p><a href="/">Home - Top Scores</a></p>
+</div>
 @endsection

@@ -60,13 +60,24 @@
 }
 
 #top_scores_table {
-    margin: 0 auto;
+    margin: 20px auto 30px auto;
+}
+
+#top_scores_table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+#top_scores_table, th, td {
+    padding: 0 10px;
 }
 
 #top_scores_table .th-unaswered-questions {
-    width: 170px;
+    width: 200px;
 }
 
-#top_scores_table .th-submit-date {
-    width: 180px;
+#internal_links {
+    margin: 30px auto 30px auto;
+    text-align: center;
+    color: darkblue;
 }
