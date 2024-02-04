@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\GuestUserController;
 use App\Http\Controllers\QuestionnaireController;
 
 /*
@@ -16,15 +16,14 @@ use App\Http\Controllers\QuestionnaireController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])
+Route::get('/', [GuestUserController::class, 'index'])
     ->name('home.index');
 
 Route::get('/questionnaires', [QuestionnaireController::class, 'index'])
     ->name('questionnaires.index');
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Route::get('/guest_users/index_admin', [GuestUserController::class, 'indexAdmin'])
+    ->middleware(['auth', 'verified'])->name('guest_users.index_admin');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

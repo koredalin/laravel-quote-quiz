@@ -30,8 +30,6 @@
                 <th>Email</th>
                 <th>Total Score</th>
                 <th>Time Used</th>
-                <th class="th-unaswered-questions">Total number of unanswered questions</th>
-                <th class="th-submit-date">Quiz Submit Date/Time</th>
             </tr>
         </thead>
         <tbody>
@@ -41,8 +39,6 @@
                     <td>{{ $result->email }}</td>
                     <td class="text-right">{{ $result->total_score }}</td>
                     <td>{{ gmdate("H:i:s", $result->duration) }}</td>
-                    <td class="text-right">{{ $result->unanswered_questions }}</td>
-                    <td>{{ $result->submit_time_utc }}</td>
                 </tr>
             @endforeach
         </tbody>
