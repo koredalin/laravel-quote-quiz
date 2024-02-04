@@ -48,6 +48,6 @@
 </div>
 
 <div id="internal_links">
-  <p><a href="/">Home - Top Scores</a></p>
+  <p><a href="{{ route('home') }}">Home - Top Scores</a></p>
 </div>
 @endsection

@@ -47,6 +47,6 @@
 </div>
 
 <div id="internal_links">
-  <p><a href="/questionnaires">Questionnaires</a></p>
+  <p><a href="{{ route('questionnaires') }}">Questionnaires</a></p>
 </div>
 @endsection

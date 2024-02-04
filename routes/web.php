@@ -17,13 +17,13 @@ use App\Http\Controllers\QuestionnaireController;
 */
 
 Route::get('/', [GuestUserController::class, 'index'])
-    ->name('home.index');
+    ->name('home');
 
 Route::get('/questionnaires', [QuestionnaireController::class, 'index'])
-    ->name('questionnaires.index');
+    ->name('questionnaires');
 
 Route::get('/guest_users/index_admin', [GuestUserController::class, 'indexAdmin'])
-    ->middleware(['auth', 'verified'])->name('guest_users.index_admin');
+    ->middleware('can:Admin')->name('guest_users.index_admin');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
