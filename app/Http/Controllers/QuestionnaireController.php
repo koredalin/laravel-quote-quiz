@@ -63,7 +63,7 @@ class QuestionnaireController extends Controller
             foreach ($questionnaire->quotes as $quote) {
                 $quotesFieldNames[] = 'quote_answer' . $quote->id;
             }
-            $answerOptions = $questionnaire->role === Quote::MODE_BINARY
+            $answerOptions = $questionnaire->mode === Quote::MODE_BINARY
                 ? implode(',', Quote::MODE_BINARY_OPTIONS)
                 : implode(',', Quote::MODE_MULTIPLE_CHOICE_OPTIONS);
         }

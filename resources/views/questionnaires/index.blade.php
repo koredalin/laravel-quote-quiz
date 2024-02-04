@@ -4,6 +4,9 @@
 
 @section('content')
 
+<h1 class="text-2xl font-bold mb-4 text-center">@yield('title')</h1>
+<br>
+
 <script>
     const durationInSeconds = {{$durationInSeconds}};</script>
 
