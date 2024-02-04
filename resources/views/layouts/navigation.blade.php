@@ -15,15 +15,17 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('guest_users.index_admin')" :active="request()->routeIs('guest_users.index_admin')">
-                        Guest Users List
-                    </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        Add Quotes
-                    </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        Add Questionnaires
-                    </x-nav-link>
+                    @can('Admin', Auth::user())
+                        <x-nav-link :href="route('guest_users.index_admin')" :active="request()->routeIs('guest_users.index_admin')">
+                            Guest Users List
+                        </x-nav-link>
+                        <x-nav-link :href="route('quotes.create_one')" :active="request()->routeIs('quotes.create_one')">
+                            Add Quote
+                        </x-nav-link>
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            Add Questionnaire
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
 

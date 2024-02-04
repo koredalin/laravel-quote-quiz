@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GuestUserController;
 use App\Http\Controllers\QuestionnaireController;
+use App\Http\Controllers\GuestUserController;
+use App\Http\Controllers\QuoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,12 @@ Route::get('/questionnaires', [QuestionnaireController::class, 'index'])
 
 Route::get('/guest_users/index_admin', [GuestUserController::class, 'indexAdmin'])
     ->middleware('can:Admin')->name('guest_users.index_admin');
+
+Route::get('/quotes/create_one', [QuoteController::class, 'createOne'])
+    ->middleware('can:Admin')->name('quotes.create_one');
+
+Route::post('/quotes/add_one', [QuoteController::class, 'addOne'])
+    ->middleware('can:Admin')->name('quotes.add_one');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
