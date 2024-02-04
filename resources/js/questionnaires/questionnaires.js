@@ -201,6 +201,19 @@ let submit = function () {
 
 window.submit = submit;
 
+let getUserRightAnswers = function () {
+  let userRightAnswers = {};
+  Object.entries(rightAnswers).forEach(entry => {
+    const [radioName, rightAnswer] = entry;
+    const answerRadio = document.querySelector('input[name='+radioName+']:checked');
+    if (answerRadio && rightAnswer === answerRadio.value) {
+      userRightAnswers[radioName] = rightAnswer;
+    }
+  });
+  
+  return userRightAnswers;
+};
+
 let showQuestionnaireResult = function () {
   Object.entries(rightAnswers).forEach(entry => {
     const [radioName, rightAnswer] = entry;
@@ -219,7 +232,7 @@ let submitForm = function () {
     name: document.querySelector('input[name="name"]').value,
     surname: document.querySelector('input[name="surname"]').value,
     email: document.querySelector('input[name="email"]').value,
-    answered_questions_count: getAnsweredQuestionsCount(),
+    total_score: Object.keys(getUserRightAnswers()).length,
     unanswered_questions_count: Object.keys(rightAnswers).length - getAnsweredQuestionsCount(),
     time_elapsed: durationInSeconds - sessionRemainingTime,
     submit_time: submitTimeUtc
