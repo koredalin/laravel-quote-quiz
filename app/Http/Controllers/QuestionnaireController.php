@@ -62,36 +62,41 @@ class QuestionnaireController extends Controller
 
     public function addOne(Request $request)
     {
-//        print_r($request->all()); exit;
         $validationArray = [
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'mode' => 'required|in:'.Quote::MODE_BINARY.','.Quote::MODE_MULTIPLE_CHOICE,
             'description' => 'nullable',
-            'quote_search' => 'required|array',
-            'quote_search.*' => 'exists:quotes,question',
-            'quote_ids' => 'required|array',
-            'quote_ids.*' => 'exists:quotes,id',
+            'quote_id' => 'required|array',
+            'quote_id.*' => 'exists:quotes,id',
         ];
-//        for ($i = 0; $i < self::QUESTIONS_PER_QUESTIONNAIRE; $i++) {
-//            $validationArray['quote_search'.$i] = 'required|exists:quotes,question';
-//            $validationArray['quote_id'.$i] = 'required|integer|exists:quotes,id';
-//        }
-        $validatedData = $request->validate($validationArray);
-
-        // New Questionnaire creation.
-//        $questionnaire = Questionnaire::create([
-//            'name' => $request->input('name'),
-//        ]);
-        $questionnaire = new Questionnaire();
-        $questionnaire->name = $validatedData['name'];
-        $questionnaire->mode = $validatedData['mode'];
-        $questionnaire->description = $validatedData['description'];
-        $questionnaire->quotes()->attach($validatedData['quote_ids']);
-        $questionnaire->save();
+        $validator = ValidatorFacade::make($request->all(), $validationArray);
         
-        session()->flash('message', 'The questionnaire was created successfully.');
+        $isSqlSuccess = true;
+        $sqlResultMessage = '';
+        try {
+            if (!$validator->fails()) {
+                $questionnaire = new Questionnaire();
+                $questionnaire->title = $request->title;
+                $questionnaire->mode = $request->mode;
+                $questionnaire->description = $request->description;
+                $questionnaire->save();
+                
+                $questionnaire->quotes()->attach($request->quote_id);
+                $questionnaire->save();
+            }
+        } catch(\Exception $e) {
+            $sqlResultMessage = $e->getMessage();
+            $isSqlSuccess = false;
+        }
 
-        return redirect('/admin/questionnaires/create_one')->with('success', 'Quote created successfully');
+        if (!$validator->fails() && $isSqlSuccess) {
+            session()->flash('message', 'The questionnaire was created successfully.');
+            return redirect('/admin/questionnaires/create_one')->with('success', 'Quote created successfully');
+        }
+
+        session()->flash('message', 'Only the description field is optional. Please, fill all the rest.');
+
+        return redirect('/admin/questionnaires/create_one')->with('fail', 'No questionnaire created. Please, fill correct data.');
     }
 
     private function validateSubmitQuiz(int $questionnaireId, Request $request): Validator

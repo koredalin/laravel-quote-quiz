@@ -17,8 +17,8 @@
           <form action="{{ route('admin.questionnaires.add_one') }}" method="post">
             @csrf
             <div class="mb-10 questionnaire-group">
-                <label for="name">Questionnaire Name:</label>
-                <input type="text" name="name" id="name" class="questionnaire-input" required>
+                <label for="title">Questionnaire Title:</label>
+                <input type="text" name="title" id="title" class="questionnaire-input" required>
             </div>
             <div class="mb-10 questionnaire-group">
                 <label for="mode">Questionnaire Mode:</label>
@@ -28,7 +28,7 @@
                 </select>
             </div>
             <div class="mb-10 questionnaire-group">
-                <label for="description">Description:</label>
+                <label for="description">Questionnaire Description:</label>
                 <textarea id="description" name="description" class="questionnaire-input" rows="4"></textarea>
             </div>
             @for ($i = 0; $i < 10; $i++)
