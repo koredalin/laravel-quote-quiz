@@ -96,3 +96,15 @@
 #quotes_container form {
     margin-top: 30px;
 }
+
+#question {
+    width: 300px;
+}
+
+#mode,
+#answer_a,
+#answer_b,
+#answer_c,
+#right_answer {
+    width: 230px;
+}
