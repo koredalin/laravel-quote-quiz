@@ -101,11 +101,6 @@
     width: 300px;
 }
 
-/*#mode,
-#answer_a,
-#answer_b,
-#answer_c,
-#right_answer {*/
 .quote-input {
     width: 250px;
     border: 1px solid #ccc;
@@ -116,13 +111,13 @@
 .combo-select {
     display: block;
     position: relative;
-    width: 250px; /* Променете ширината според вашите предпочитания */
+    width: 250px;
     margin: 0 auto 20px auto;
 }
 
-.quote-select {
-    display: none;
-    width: 100%;
+.combo-select label {
+    position: relative;
+    z-index: 1;
 }
 
 .quote-search {
@@ -132,13 +127,22 @@
     padding: 5px;
 }
 
+.quote-select {
+    display: none;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
 .combo-select.active .quote-select {
     display: block;
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
-    max-height: 200px; /* Променете максималната височина според вашите предпочитания */
+    max-height: 200px;
     overflow-y: auto;
 }
 
