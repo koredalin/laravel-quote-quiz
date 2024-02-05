@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuestionnaireController;
+use App\Http\Controllers\QuoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +25,7 @@ Route::pattern('id', '[0-9]+');
 Route::get('/questionnaires/{id}/quotes', [QuestionnaireController::class, 'getQuotes']);
 
 Route::post('/questionnaire/{id}/submit', [QuestionnaireController::class, 'submitQuiz']);
+
+Route::get('/admin/quotes/search/{mode}/{text}', [QuoteController::class, 'search'])
+//    ->middleware('can:Admin')->name('admin.quotes.search');
+    ->name('admin.quotes.search');

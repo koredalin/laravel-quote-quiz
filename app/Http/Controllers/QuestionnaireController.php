@@ -13,6 +13,8 @@ use App\Helpers\DateTimeHelper;
 
 class QuestionnaireController extends Controller
 {
+    public const QUESTIONS_PER_QUESTIONNAIRE = 10;
+    
     public function index()
     {
         $questionnaires = Questionnaire::paginate(10);
@@ -52,7 +54,44 @@ class QuestionnaireController extends Controller
             'data' => json_encode($data),
         ]);
     }
-    
+
+    public function createOne()
+    {
+        return view('questionnaires.create_one');
+    }
+
+    public function addOne(Request $request)
+    {
+//        print_r($request->all()); exit;
+        $validationArray = [
+            'name' => 'required|string|max:255',
+            'mode' => 'required|in:'.Quote::MODE_BINARY.','.Quote::MODE_MULTIPLE_CHOICE,
+            'quote_search' => 'required|array',
+            'quote_search.*' => 'exists:quotes,question',
+            'quote_ids' => 'required|array',
+            'quote_ids.*' => 'exists:quotes,id',
+        ];
+//        for ($i = 0; $i < self::QUESTIONS_PER_QUESTIONNAIRE; $i++) {
+//            $validationArray['quote_search'.$i] = 'required|exists:quotes,question';
+//            $validationArray['quote_id'.$i] = 'required|integer|exists:quotes,id';
+//        }
+        $validatedData = $request->validate($validationArray);
+
+        // New Questionnaire creation.
+//        $questionnaire = Questionnaire::create([
+//            'name' => $request->input('name'),
+//        ]);
+        $questionnaire = new Questionnaire();
+        $questionnaire->name = $validatedData['name'];
+        $questionnaire->mode = $validatedData['mode'];
+        $questionnaire->quotes()->attach($validatedData['quote_ids']);
+        $questionnaire->save();
+        
+        session()->flash('message', 'The questionnaire was created successfully.');
+
+        return redirect('/admin/questionnaires/create_one')->with('success', 'Quote created successfully');
+    }
+
     private function validateSubmitQuiz(int $questionnaireId, Request $request): Validator
     {
         $questionnaire = Questionnaire::find($questionnaireId);

@@ -108,3 +108,33 @@
 #right_answer {
     width: 230px;
 }
+
+
+.combo-select {
+    display: inline-block;
+    position: relative;
+}
+
+.quote-select {
+    display: none;
+    width: 200px; /* Променете ширината според вашите предпочитания */
+}
+
+.quote-search {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+/*    position: absolute;
+    z-index: 1000;*/
+}
+
+.combo-select.active .quote-select {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px; /* Променете максималната височина според вашите предпочитания */
+    overflow-y: auto;
+}

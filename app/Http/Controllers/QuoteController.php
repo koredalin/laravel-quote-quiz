@@ -36,4 +36,16 @@ class QuoteController extends Controller
 
         return redirect('/quotes/create_one')->with('success', 'Quote created successfully');
     }
+
+    public function search(string $mode, string $text, Request $request)
+    {
+        $searchText = trim($text);
+
+        $quotes = Quote::where('mode', $mode)
+            ->where('question', 'LIKE', '%' . $searchText . '%')
+            ->take(20)
+            ->get();
+
+        return response()->json(['quotes' => $quotes]);
+    }
 }

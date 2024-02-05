@@ -22,7 +22,7 @@
                         <x-nav-link :href="route('quotes.create_one')" :active="request()->routeIs('quotes.create_one')">
                             Add Quote
                         </x-nav-link>
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        <x-nav-link :href="route('admin.questionnaires.create_one')" :active="request()->routeIs('admin.questionnaires.create_one')">
                             Add Questionnaire
                         </x-nav-link>
                     @endcan
