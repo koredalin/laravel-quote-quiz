@@ -53,8 +53,8 @@
         </form>
 
         <div id="internal_links">
-          <p><a href="{{ route('questionnaires') }}">Questionnaires</a></p>
           <p><a href="{{ route('home') }}">Top Scores</a></p>
+          <p><a href="{{ route('questionnaires') }}">Questionnaires List</a></p>
         </div>
     </div>
   

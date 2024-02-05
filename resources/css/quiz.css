@@ -10,7 +10,7 @@
 }
 
 .container {
-    background-color: #e8e8e8;
+    background-color: #ededed;
 }
 
 .green {
@@ -79,6 +79,10 @@
 
 #top_scores_table .th-unaswered-questions {
     width: 200px;
+}
+
+.questionnaires-list-title {
+    margin-top: 60px;
 }
 
 #internal_links {

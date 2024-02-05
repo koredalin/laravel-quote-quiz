@@ -3,18 +3,34 @@
 @section('title', $title)
 
 @section('content')
-<h1 class="text-2xl font-bold mb-4 text-center">@yield('title')</h1>
+
+<div>
+    @if (Route::has('login'))
+        <div class="fixed top-0 profile-right px-6 py-4 sm:block">
+            @auth
+                <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
+            @else
+                <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                @endif
+            @endauth
+        </div>
+    @endif
+</div>
+
+<h1 class="text-2xl font-bold mb-4 text-center questionnaires-list-title">@yield('title')</h1>
 <br>
 
 <script>
     const durationInSeconds = {{$durationInSeconds}};</script>
 
-<ul class="list-disc pl-5">
-  @foreach ($questionnaires as $questionnaire)
-  <li><a href="javascript:void(0)" onclick="loadQuestions({{ $questionnaire->id }})">{{ $questionnaire->title }}</a></li>
-  <!--<li class="mb-2"><a href="javascript:void(0)" onclick="loadQuestions({{ $questionnaire->title }})">{{ $questionnaire->title }}</a></li>-->
-  @endforeach
-</ul>
+<div class="text-center">
+    @foreach ($questionnaires as $questionnaire)
+        <p><a href="javascript:void(0)" onclick="loadQuestions({{ $questionnaire->id }})" title="{{ $questionnaire->description }}">{{ $questionnaire->title }}</a></p>
+    @endforeach
+</div>
 
 {{ $questionnaires->links() }}
 
