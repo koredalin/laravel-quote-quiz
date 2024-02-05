@@ -66,6 +66,7 @@ class QuestionnaireController extends Controller
         $validationArray = [
             'name' => 'required|string|max:255',
             'mode' => 'required|in:'.Quote::MODE_BINARY.','.Quote::MODE_MULTIPLE_CHOICE,
+            'description' => 'nullable',
             'quote_search' => 'required|array',
             'quote_search.*' => 'exists:quotes,question',
             'quote_ids' => 'required|array',
@@ -84,6 +85,7 @@ class QuestionnaireController extends Controller
         $questionnaire = new Questionnaire();
         $questionnaire->name = $validatedData['name'];
         $questionnaire->mode = $validatedData['mode'];
+        $questionnaire->description = $validatedData['description'];
         $questionnaire->quotes()->attach($validatedData['quote_ids']);
         $questionnaire->save();
         

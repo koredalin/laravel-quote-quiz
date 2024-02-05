@@ -101,23 +101,28 @@
     width: 300px;
 }
 
-#mode,
+/*#mode,
 #answer_a,
 #answer_b,
 #answer_c,
-#right_answer {
-    width: 230px;
+#right_answer {*/
+.quote-input {
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-
+.questionnaire-group,
 .combo-select {
-    display: inline-block;
+    display: block;
     position: relative;
+    width: 250px; /* Променете ширината според вашите предпочитания */
+    margin: 0 auto 20px auto;
 }
 
 .quote-select {
     display: none;
-    width: 200px; /* Променете ширината според вашите предпочитания */
+    width: 100%;
 }
 
 .quote-search {
@@ -125,8 +130,6 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 5px;
-/*    position: absolute;
-    z-index: 1000;*/
 }
 
 .combo-select.active .quote-select {
@@ -137,4 +140,13 @@
     width: 100%;
     max-height: 200px; /* Променете максималната височина според вашите предпочитания */
     overflow-y: auto;
+}
+
+.questionnaire-input {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+/*    position: absolute;
+    z-index: 1000;*/
 }

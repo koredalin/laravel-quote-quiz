@@ -16,16 +16,20 @@
 
           <form action="{{ route('admin.questionnaires.add_one') }}" method="post">
             @csrf
-            <div>
+            <div class="mb-10 questionnaire-group">
                 <label for="name">Questionnaire Name:</label>
-                <input type="text" name="name" id="name" required>
+                <input type="text" name="name" id="name" class="questionnaire-input" required>
             </div>
-            <div>
+            <div class="mb-10 questionnaire-group">
                 <label for="mode">Questionnaire Mode:</label>
-                <select name="mode" id="mode" required>
+                <select name="mode" id="mode" class="questionnaire-input" required>
                     <option value="binary">Binary</option>
                     <option value="multiple_choice">Multiple Choice</option>
                 </select>
+            </div>
+            <div class="mb-10 questionnaire-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" class="questionnaire-input" rows="4"></textarea>
             </div>
             @for ($i = 0; $i < 10; $i++)
                 <div id="combo_select{{ $i }}" class="combo-select mb-10">
@@ -36,8 +40,8 @@
                     </select>
                 </div>
             @endfor
-            <div>
-                <button type="submit">Submit</button>
+            <div style="text-align: center;">
+                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
             </div>
         </form>
 
