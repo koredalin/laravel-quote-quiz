@@ -7,7 +7,6 @@ let loadQuestions = function (questionnaireId) {
   fetch(`/api/questionnaires/${questionnaireId}/quotes`)
     .then(response => response.json())
     .then(data => {
-      console.log(data);
       updateModal(data);
       loadedQuestionnnaireId = questionnaireId;
     })
@@ -109,8 +108,7 @@ let startTimer = function () {
   questionsContainer.classList.remove('hidden');
   submitButton.classList.remove('hidden');
 
-//    let sessionRemainingTime = durationInSeconds;
-  sessionRemainingTime = 20;
+  let sessionRemainingTime = durationInSeconds;
 
   updateTimerDisplay();
 
@@ -244,7 +242,6 @@ let submitForm = function () {
 
   axios.post('/api/questionnaire/'+loadedQuestionnnaireId+'/submit', formData)
     .then((response) => {
-      console.log(response.data);
       // TODO - Show if the result is successfully submited.
     })
     .catch((error) => {

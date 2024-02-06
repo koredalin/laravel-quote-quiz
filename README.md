@@ -46,6 +46,7 @@ After selecting a questionnaire from the list a modal is opened. User's names an
 - Better visualization of Questionnaires List.
 - JS and CSS files could be refactored, so they are in more separate directory structure. We could add 'admin' folders.
 - "\resources\js\questionnaires\questionnaires.js" - This file is too big and too complicated at the moment. It could be refactored.
+- Also, we can add a message into "questionnaires.js" if the form is submitted successfully on the backend.
 - There could have "App\Http\Controllers\Admin" namespace. So, we will know which code needs user login, privileges, etc..
 
 ## Local Server Installation
