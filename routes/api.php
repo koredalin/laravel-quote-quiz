@@ -26,6 +26,8 @@ Route::get('/questionnaires/{id}/quotes', [QuestionnaireController::class, 'getQ
 
 Route::post('/questionnaire/{id}/submit', [QuestionnaireController::class, 'submitQuiz']);
 
+Route::post('/questionnaires/add_one_validation', [QuestionnaireController::class, 'addOneValidation']);
+
 Route::get('/admin/quotes/search/{mode}/{text}', [QuoteController::class, 'search'])
 //    ->middleware('can:Admin')->name('admin.quotes.search');
     ->name('admin.quotes.search');

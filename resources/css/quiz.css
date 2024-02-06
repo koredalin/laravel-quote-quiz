@@ -158,3 +158,8 @@
 /*    position: absolute;
     z-index: 1000;*/
 }
+
+.form-errors {
+    color: darkred;
+    text-align: center;
+}

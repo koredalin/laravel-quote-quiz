@@ -13,8 +13,6 @@ use App\Helpers\DateTimeHelper;
 
 class QuestionnaireController extends Controller
 {
-    public const QUESTIONS_PER_QUESTIONNAIRE = 10;
-    
     public function index()
     {
         $questionnaires = Questionnaire::paginate(10);
@@ -57,24 +55,19 @@ class QuestionnaireController extends Controller
 
     public function createOne()
     {
-        return view('questionnaires.create_one');
+        return view('questionnaires.create_one', [
+            'questionsPerQuestionnaire' => Questionnaire::QUESTIONS_PER_QUESTIONNAIRE,
+        ]);
     }
 
     public function addOne(Request $request)
     {
-        $validationArray = [
-            'title' => 'required|string|max:255',
-            'mode' => 'required|in:'.Quote::MODE_BINARY.','.Quote::MODE_MULTIPLE_CHOICE,
-            'description' => 'nullable',
-            'quote_id' => 'required|array',
-            'quote_id.*' => 'exists:quotes,id',
-        ];
-        $validator = ValidatorFacade::make($request->all(), $validationArray);
-        
-        $isSqlSuccess = true;
+        $validator = $this->getAddOneValidator($request);
+        $isValidationSuccess = !$validator->fails();
+
         $sqlResultMessage = '';
         try {
-            if (!$validator->fails()) {
+            if ($isValidationSuccess) {
                 $questionnaire = new Questionnaire();
                 $questionnaire->title = $request->title;
                 $questionnaire->mode = $request->mode;
@@ -85,18 +78,51 @@ class QuestionnaireController extends Controller
                 $questionnaire->save();
             }
         } catch(\Exception $e) {
-            $sqlResultMessage = $e->getMessage();
-            $isSqlSuccess = false;
+            $sqlResultMessage = 'Please, try again later.';
         }
 
-        if (!$validator->fails() && $isSqlSuccess) {
+        if ($isValidationSuccess && empty($sqlResultMessage)) {
             session()->flash('message', 'The questionnaire was created successfully.');
             return redirect('/admin/questionnaires/create_one')->with('success', 'Quote created successfully');
         }
 
-        session()->flash('message', 'Only the description field is optional. Please, fill all the rest.');
+        $errors = $validator->errors();
+        $errorsArr = $errors->all();
+        $errorMessage = 'Something is wrong. Please, review your answers. ';
+        $errorMessage .= implode('. ', $errorsArr);
+        $errorMessage .= $sqlResultMessage;
+        session()->flash('message', $errorMessage);
 
         return redirect('/admin/questionnaires/create_one')->with('fail', 'No questionnaire created. Please, fill correct data.');
+    }
+
+    public function addOneValidation(Request $request)
+    {
+        $validator = $this->getAddOneValidator($request);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+
+            $errorArray = $errors->all();
+
+            return response()->json(['errors' => $errorArray], 422);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    private function getAddOneValidator(Request $request): Validator
+    {
+        $validationArray = [
+            'title' => 'required|unique:questionnaires|string|max:255',
+            'mode' => 'required|in:'.Quote::MODE_BINARY.','.Quote::MODE_MULTIPLE_CHOICE,
+            'description' => 'nullable',
+            'quote_id' => 'required|array',
+            'quote_id.*' => 'exists:quotes,id|distinct',
+        ];
+        $validator = ValidatorFacade::make($request->all(), $validationArray);
+        
+        return $validator;
     }
 
     private function validateSubmitQuiz(int $questionnaireId, Request $request): Validator

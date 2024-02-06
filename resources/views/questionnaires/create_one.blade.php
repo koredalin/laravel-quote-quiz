@@ -14,7 +14,7 @@
             @endif
         </div>
 
-          <form action="{{ route('admin.questionnaires.add_one') }}" method="post">
+          <form id="questionnaire_form" action="{{ route('admin.questionnaires.add_one') }}" method="post">
             @csrf
             <div class="mb-10 questionnaire-group">
                 <label for="title">Questionnaire Title:</label>
@@ -31,7 +31,7 @@
                 <label for="description">Questionnaire Description:</label>
                 <textarea id="description" name="description" class="questionnaire-input" rows="4"></textarea>
             </div>
-            @for ($i = 0; $i < 10; $i++)
+            @for ($i = 0; $i < $questionsPerQuestionnaire; $i++)
                 <div id="combo_select{{ $i }}" class="combo-select mb-10">
                     <label for="quote_id{{ $i }}">Select a Quote:</label>
                     <input type="text" name="quote_search[{{ $i }}]" id="quote_search{{ $i }}" class="quote-search" placeholder="Search for a Quote" />
@@ -40,6 +40,7 @@
                     </select>
                 </div>
             @endfor
+            <div id="validation_errors" class="form-errors"></div>
             <div style="text-align: center;">
                 <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
             </div>
@@ -52,4 +53,5 @@
     </div>
   
     <script src="{{ asset('js/questionnaires/create_one.js') }}"></script>
+    <script src="{{ asset('js/questionnaires/form_validation.js') }}"></script>
 </x-app-layout>
