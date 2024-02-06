@@ -52,15 +52,19 @@ After selecting a questionnaire from the list a modal is opened. User's names an
 ## Local Server Installation
 
 1. Clone the repository.
-2. Configure your database settings in the `.env` file.
-3. Run the following commands to set up the database:
+2. Run the following commands to install all needed resources:
+   - `composer install`: Installs all needed php packages.
+   - `npm install`: Installs all needed node.js packages.
+3. Configure your database settings in the `.env` file.
+4. You can generate an APP_KEY with: `php artisan key:generate` command.
+5. Run the following commands to set up the database:
    - `php artisan migrate`: Run all migrations.
    - `php artisan db:seed --class=GuestUserSeeder`: Seed the database with seeder class `GuestUserSeeder`.
    - `php artisan db:seed --class=UserSeeder`: Seed the database with seeder class `UserSeeder`.
    - `php artisan db:seed --class=QuestionnaireSeeder`: Seed the database with seeder class `QuestionnaireSeeder`.
    - `php artisan db:seed --class=QuoteSeeder`: Seed the database with seeder class `QuoteSeeder`.
    - `php artisan db:seed --class=QuestionnaireQuoteSeeder`: Seed the database with seeder class `QuestionnaireQuoteSeeder`.
-4. Run the following commands to start the local servers:
+6. Run the following commands to start the local servers:
    - `php artisan serve`: Starts the php server.
    - Start a MySql server on your local machine.
    - `npm run dev`: It starts the Node.js server.
