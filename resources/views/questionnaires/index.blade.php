@@ -28,7 +28,7 @@
 
 <div class="text-center">
     @foreach ($questionnaires as $questionnaire)
-        <p><a href="javascript:void(0)" onclick="loadQuestions({{ $questionnaire->id }})" title="{{ $questionnaire->description }}">{{ $questionnaire->title }}</a></p>
+        <p><a href="javascript:void(0)" onclick="loadQuestions({{ $questionnaire->id }})" title="{{ $questionnaire->description }}">{{ $questionnaire->title }}. Mode: {{ str_replace('_', ' ', $questionnaire->mode) }}.</a></p>
     @endforeach
 </div>
 

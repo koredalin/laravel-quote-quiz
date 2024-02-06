@@ -42,7 +42,12 @@ After selecting a questionnaire from the list a modal is opened. User's names an
 
 - Enhance validation error messages on the "Add Questionnaire" page to display errors under each input field.
 - Record `created_at` and `updated_at` timestamps in the `questionnaires_quotes` table.
-  
+- All API requests that need Admin authorisation should have one. They are with authorization at the moment.
+- Better visualization of Questionnaires List.
+- JS and CSS files could be refactored, so they are in more separate directory structure. We could add 'admin' folders.
+- "\resources\js\questionnaires\questionnaires.js" - This file is too big and too complicated at the moment. It could be refactored.
+- There could have "App\Http\Controllers\Admin" namespace. So, we will know which code needs user login, privileges, etc..
+
 ## Local Server Installation
 
 1. Clone the repository.
