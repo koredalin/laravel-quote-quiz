@@ -1,66 +1,70 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Famous Quote Quiz Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Overview
 
-## About Laravel
+This is a web-based quiz application built using Laravel 9, Alpine.js, Tailwind CSS, and ES6. It allows users to create questionnaires, answer them, and view top scores. The application has two user roles: admin and guest users.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Admin Functionality:**
+  - Create and manage questionnaires.
+  - Create and manage individual quiz questions (quotes).
+  - View top scores of all users.
+  
+- **Guest User Functionality:**
+  - Answer questionnaires.
+  - View top scores.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Usage
 
-## Learning Laravel
+### Admin Access
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Admins can access the following pages:
+  - `/admin/questionnaires/create_one`: Create a new questionnaire.
+  - `/quotes/create_one`: Create a new quiz question (quote).
+  - `/guest_users/index_admin`: View top scores for admin users.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Guest User Access
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Guest users can access the following pages:
+  - `/`: Home page with top scores.
+  - `/questionnaires`: View a list of available questionnaires.
+  - `/questionnaires/{id}`: Answer a specific questionnaire.
 
-## Laravel Sponsors
+After selecting a questionnaire from the list a modal is opened. User's names and email are recorded into the local storage for an hour. It will facilitate the user on submitting multiple questionnaires in a short time.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Database
 
-### Premium Partners
+- The application uses a database with two tables: `questionnaires` and `quotes`.
+- `questionnaires` and `quotes` are linked in a many-to-many relationship to allow flexible questionnaire creation.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Future Improvements
 
-## Contributing
+- Enhance validation error messages on the "Add Questionnaire" page to display errors under each input field.
+- Record `created_at` and `updated_at` timestamps in the `questionnaires_quotes` table.
+  
+## Local Server Installation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Clone the repository.
+2. Configure your database settings in the `.env` file.
+3. Run the following commands to set up the database:
+   - `php artisan migrate`: Run all migrations.
+   - `php artisan db:seed --class=GuestUserSeeder`: Seed the database with seeder class `GuestUserSeeder`.
+   - `php artisan db:seed --class=UserSeeder`: Seed the database with seeder class `UserSeeder`.
+   - `php artisan db:seed --class=QuestionnaireSeeder`: Seed the database with seeder class `QuestionnaireSeeder`.
+   - `php artisan db:seed --class=QuoteSeeder`: Seed the database with seeder class `QuoteSeeder`.
+   - `php artisan db:seed --class=QuestionnaireQuoteSeeder`: Seed the database with seeder class `QuestionnaireQuoteSeeder`.
+4. Run the following commands to start the local servers:
+   - `php artisan serve`: Starts the php server.
+   - Start a MySql server on your local machine.
+   - `npm run dev`: It starts the Node.js server.
 
-## Code of Conduct
+Please, keep the sequence of the seeds.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Contributors
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Hristo Hristov
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-source and available under the [MIT License](https://opensource.org/license/mit/).
